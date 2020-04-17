@@ -1,0 +1,7 @@
+overwrite: true
+schema:
+  - './test/schema.graphql'
+generates:
+  ./test/output.ts:
+    plugins:
+      - './index.js'

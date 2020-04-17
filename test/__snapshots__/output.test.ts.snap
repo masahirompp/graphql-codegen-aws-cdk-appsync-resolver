@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CloudFormation Test 1`] = `
+Object {
+  "Properties": Object {
+    "ApiId": Object {
+      "Fn::GetAtt": Array [
+        "ItemsApi",
+        "ApiId",
+      ],
+    },
+    "DataSourceName": "DataSourceQueryGetUser",
+    "FieldName": "getUser",
+    "TypeName": "Query",
+  },
+  "Type": "AWS::AppSync::Resolver",
+}
+`;
+
+exports[`CloudFormation Test 2`] = `
+Object {
+  "Properties": Object {
+    "ApiId": Object {
+      "Fn::GetAtt": Array [
+        "ItemsApi",
+        "ApiId",
+      ],
+    },
+    "DataSourceName": "DataSourceQueryListUsers",
+    "FieldName": "listUsers",
+    "TypeName": "Query",
+  },
+  "Type": "AWS::AppSync::Resolver",
+}
+`;
