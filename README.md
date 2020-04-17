@@ -95,7 +95,7 @@ Generate aws-cdk AppSync
        // crate ListUsers Query resolver template
        createQueryListUsersResolver(
          this,
-         name => `Dev${name}`
+         name => `Dev${name}` // name function
          {
            apiId: api.attrApiId,
            ...
@@ -112,12 +112,6 @@ Generate aws-cdk AppSync
      ItemsApi:
        Type: AWS::AppSync::GraphQLApi
        ...
-     DataSourceQueryGetUser:
-       Type: AWS::AppSync::DataSource
-       ...
-     DataSourceQueryListUsers:
-       Type: AWS::AppSync::DataSource
-       ...
      AppSyncResolverQueryGetUser:
        Type: AWS::AppSync::Resolver
        ...
@@ -129,7 +123,7 @@ Generate aws-cdk AppSync
              ...
            }
        ResponseMappingTemplate: ...
-     AppSyncResolverQueryListUsers:
+     DevAppSyncResolverQueryListUsers:
        Type: AWS::AppSync::Resolver
        ...
        RequestMappingTemplate: >-
