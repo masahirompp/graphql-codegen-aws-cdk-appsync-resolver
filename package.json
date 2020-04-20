@@ -1,6 +1,6 @@
 {
   "name": "graphql-codegen-aws-cdk-appsync-resolver",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "generate aws-cdk appsync resolver from schema.graphql",
   "main": "index.js",
   "types": "index.d.ts",
