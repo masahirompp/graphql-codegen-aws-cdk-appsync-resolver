@@ -1,4 +1,4 @@
-import { CfnDataSource, CfnGraphQLApi } from "@aws-cdk/aws-appsync";
+import { CfnDataSource, GraphQLApi } from "@aws-cdk/aws-appsync";
 import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
 import {
   createQueryGetUserResolver,
@@ -9,16 +9,16 @@ export class TestStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const api = new CfnGraphQLApi(this, "ItemsApi", {
+    const api = new GraphQLApi(this, "ItemsApi", {
       name: "items-api",
-      authenticationType: "AMAZON_COGNITO_USER_POOLS",
+      schemaDefinitionFile: "./test/schema.graphql",
     });
 
     const dataSourceQueryGetUser = new CfnDataSource(
       this,
       "DataSourceQueryGetUser",
       {
-        apiId: api.attrApiId,
+        apiId: api.apiId,
         name: "DataSourceQueryGetUser",
         type: "AWS_LAMBDA",
         lambdaConfig: { lambdaFunctionArn: "dummy" },
@@ -29,7 +29,7 @@ export class TestStack extends Stack {
       this,
       "DataSourceQueryListUsers",
       {
-        apiId: api.attrApiId,
+        apiId: api.apiId,
         name: "DataSourceQueryListUsers",
         type: "AWS_LAMBDA",
         lambdaConfig: { lambdaFunctionArn: "dummy" },
@@ -38,13 +38,13 @@ export class TestStack extends Stack {
 
     // test 1
     createQueryGetUserResolver(this, {
-      apiId: api.attrApiId,
+      api,
       dataSourceName: dataSourceQueryGetUser.name,
     });
 
     // test 2
     createQueryListUsersResolver(this, (name) => `Test${name}`, {
-      apiId: api.attrApiId,
+      api,
       dataSourceName: dataSourceQueryListUsers.name,
     });
   }

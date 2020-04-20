@@ -46,36 +46,40 @@ export const plugin: PluginFunction<RawTypesConfig> = (schema) => {
 
   return {
     prepend: [
-      `import { CfnResolver, CfnResolverProps } from '@aws-cdk/aws-appsync';
+      `import { CfnResolver, CfnResolverProps, GraphQLApi } from '@aws-cdk/aws-appsync';
 import { Construct } from '@aws-cdk/core';
 
 const pascalCase = (str: string) => str.length > 1 ? str.charAt(0).toUpperCase() + str.slice(1) : str.toUpperCase();
 
 export type NameFunction = (defaultName: string) => string;
-export type ResolverProps = Omit<CfnResolverProps, "typeName" | "fieldName">;
+export type ResolverProps = Omit<CfnResolverProps, "apiId" | "typeName" | "fieldName"> & { api: GraphQLApi };
 
 const createResolver = (typeName: string, fieldName: string) => (
   scope: Construct,
   nameOrProps: string | NameFunction | ResolverProps,
   props?: ResolverProps
 ) => {
-  let name = "AppSyncResolver" + typeName + pascalCase(fieldName);
-  let restProps: ResolverProps;
+  let _name = "AppSyncResolver" + typeName + pascalCase(fieldName);
+  let _props: ResolverProps;
 
   if (typeof nameOrProps === "string") {
-    name = nameOrProps;
-    restProps = props!;
+    _name = nameOrProps;
+    _props = props!;
   } else if (typeof nameOrProps === "function") {
-    name = nameOrProps(name);
-    restProps = props!;
+    _name = nameOrProps(_name);
+    _props = props!;
   } else {
-    restProps = nameOrProps;
+    _props = nameOrProps;
   }
-  return new CfnResolver(scope, name, {
+  const { api, ...restProps } = _props;
+  const resolver = new CfnResolver(scope, _name, {
+    apiId: api.apiId,
     typeName,
     fieldName,
     ...restProps,
   });
+  resolver.addDependsOn(api.schema);
+  return resolver;
 };
 `,
     ],

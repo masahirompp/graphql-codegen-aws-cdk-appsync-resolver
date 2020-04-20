@@ -70,7 +70,7 @@ Generate aws-cdk AppSync
 
    ```typescript
    // Your aws-cdk code
-   import { CfnGraphQLApi } from "@aws-cdk/aws-appsync";
+   import { GraphQLApi } from "@aws-cdk/aws-appsync";
    import { Construct, Stack, StackProps } from "@aws-cdk/core";
    import {
      createQueryGetUserResolver,
@@ -81,13 +81,13 @@ Generate aws-cdk AppSync
      constructor(scope: Construct, id: string, props?: StackProps) {
        super(scope, id, props);
 
-       const api = new CfnGraphQLApi( ... );
+       const api = new GraphQLApi( ... );
 
        // crate GetOne Query resolver template
        createQueryGetOneResolver(
          this,
          {
-           apiId: api.attrApiId,
+           api,
            ...
          }
        );
@@ -97,7 +97,7 @@ Generate aws-cdk AppSync
          this,
          name => `Dev${name}` // name function
          {
-           apiId: api.attrApiId,
+           api,
            ...
          }
        );

@@ -2,10 +2,13 @@
 
 exports[`CloudFormation Test 1`] = `
 Object {
+  "DependsOn": Array [
+    "ItemsApiSchemaDC216D83",
+  ],
   "Properties": Object {
     "ApiId": Object {
       "Fn::GetAtt": Array [
-        "ItemsApi",
+        "ItemsApi3788C05C",
         "ApiId",
       ],
     },
@@ -19,10 +22,13 @@ Object {
 
 exports[`CloudFormation Test 2`] = `
 Object {
+  "DependsOn": Array [
+    "ItemsApiSchemaDC216D83",
+  ],
   "Properties": Object {
     "ApiId": Object {
       "Fn::GetAtt": Array [
-        "ItemsApi",
+        "ItemsApi3788C05C",
         "ApiId",
       ],
     },
