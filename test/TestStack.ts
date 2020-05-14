@@ -39,13 +39,13 @@ export class TestStack extends Stack {
     // test 1
     createQueryGetUserResolver(this, {
       api,
-      dataSourceName: dataSourceQueryGetUser.name,
+      dataSource: dataSourceQueryGetUser,
     });
 
     // test 2
     createQueryListUsersResolver(this, (name) => `Test${name}`, {
       api,
-      dataSourceName: dataSourceQueryListUsers.name,
+      dataSource: dataSourceQueryListUsers,
     });
   }
 }

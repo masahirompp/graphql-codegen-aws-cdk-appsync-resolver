@@ -3,6 +3,7 @@
 exports[`CloudFormation Test 1`] = `
 Object {
   "DependsOn": Array [
+    "DataSourceQueryGetUser",
     "ItemsApiSchemaDC216D83",
   ],
   "Properties": Object {
@@ -23,6 +24,7 @@ Object {
 exports[`CloudFormation Test 2`] = `
 Object {
   "DependsOn": Array [
+    "DataSourceQueryListUsers",
     "ItemsApiSchemaDC216D83",
   ],
   "Properties": Object {
