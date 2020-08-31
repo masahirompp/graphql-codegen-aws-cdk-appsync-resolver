@@ -4,11 +4,24 @@ Generate aws-cdk AppSync
 
 ## Quick Start
 
-1. install using yarn:
+1. install peer dependencies:
 
    ```sh
-   $ yarn add -D graphql @graphql-codegen/cli graphql-codegen-aws-cdk-appsync-resolver
+   $ yarn add -D graphql @graphql-codegen/cli
    ```
+
+1. install graphql-codegen-aws-cdk-appsync-resolver
+
+   ```sh
+   $ yarn add -D graphql-codegen-aws-cdk-appsync-resolver
+   ```
+
+   note: versions
+
+   | aws-cdk | graphql-codegen-aws-cdk-appsync-resolver |
+   | ------- | ---------------------------------------- |
+   | <=1.59  | <=0.3.2                                  |
+   | >=1.60  | >=0.4.0                                  |
 
 1. add codegen.yml:
 
