@@ -71,13 +71,10 @@ const createResolver = (typeName: string, fieldName: string) => (
   } else {
     _props = nameOrProps;
   }
-  const { api, dataSource, ...restProps } = _props;
   const resolver = new Resolver(scope, _name, {
-    api,
-    dataSource,
+    ..._props,
     typeName,
     fieldName,
-    ...restProps,
   });
   return resolver;
 };

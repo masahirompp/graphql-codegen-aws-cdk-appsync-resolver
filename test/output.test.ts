@@ -13,7 +13,6 @@ test("CloudFormation Test", () => {
   const test2Key = Object.keys(resources).find((key) =>
     key.startsWith("TestAppSyncResolverQueryListUsers")
   )!;
-  console.log({ test1Key, test2Key });
 
   // test 1
   expect(resources[test1Key]).toMatchSnapshot();

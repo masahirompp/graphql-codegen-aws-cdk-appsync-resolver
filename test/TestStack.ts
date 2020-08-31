@@ -5,6 +5,7 @@ import {
   createQueryListUsersResolver,
 } from "./output";
 import { Function, AssetCode, Runtime } from "@aws-cdk/aws-lambda";
+import { Table, AttributeType } from "@aws-cdk/aws-dynamodb";
 
 export class TestStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -15,12 +16,10 @@ export class TestStack extends Stack {
       schema: Schema.fromAsset("./test/schema.graphql"),
     });
 
-    const dataSourceQueryGetUser = api.addLambdaDataSource(
+    const dataSourceQueryGetUser = api.addDynamoDbDataSource(
       "DataSourceQueryGetUser",
-      new Function(this, "GetUserFunction", {
-        code: AssetCode.fromInline("export const handler = () => null"),
-        handler: "index.handler",
-        runtime: Runtime.NODEJS_12_X,
+      new Table(this, "UserTable", {
+        partitionKey: { name: "userId", type: AttributeType.STRING },
       })
     );
 
