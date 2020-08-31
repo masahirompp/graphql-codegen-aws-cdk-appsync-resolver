@@ -1,4 +1,8 @@
-import { CfnDataSource, GraphQLApi } from "@aws-cdk/aws-appsync";
+import {
+  CfnDataSource,
+  GraphQLApi,
+  SchemaDefinition,
+} from "@aws-cdk/aws-appsync";
 import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
 import {
   createQueryGetUserResolver,
@@ -11,6 +15,7 @@ export class TestStack extends Stack {
 
     const api = new GraphQLApi(this, "ItemsApi", {
       name: "items-api",
+      schemaDefinition: SchemaDefinition.FILE,
       schemaDefinitionFile: "./test/schema.graphql",
     });
 
