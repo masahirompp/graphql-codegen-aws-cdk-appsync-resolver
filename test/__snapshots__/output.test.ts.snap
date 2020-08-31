@@ -3,7 +3,7 @@
 exports[`CloudFormation Test 1`] = `
 Object {
   "DependsOn": Array [
-    "DataSourceQueryGetUser",
+    "ItemsApiDataSourceQueryGetUser85089BF2",
     "ItemsApiSchemaDC216D83",
   ],
   "Properties": Object {
@@ -15,6 +15,7 @@ Object {
     },
     "DataSourceName": "DataSourceQueryGetUser",
     "FieldName": "getUser",
+    "Kind": "UNIT",
     "TypeName": "Query",
   },
   "Type": "AWS::AppSync::Resolver",
@@ -24,7 +25,7 @@ Object {
 exports[`CloudFormation Test 2`] = `
 Object {
   "DependsOn": Array [
-    "DataSourceQueryListUsers",
+    "ItemsApiDataSourceQueryListUsersB20E9633",
     "ItemsApiSchemaDC216D83",
   ],
   "Properties": Object {
@@ -36,6 +37,7 @@ Object {
     },
     "DataSourceName": "DataSourceQueryListUsers",
     "FieldName": "listUsers",
+    "Kind": "UNIT",
     "TypeName": "Query",
   },
   "Type": "AWS::AppSync::Resolver",

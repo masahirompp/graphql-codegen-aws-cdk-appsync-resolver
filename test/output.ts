@@ -1,18 +1,18 @@
-import { CfnDataSource, CfnResolver, CfnResolverProps, GraphQLApi } from '@aws-cdk/aws-appsync';
+import { Resolver, ResolverProps } from '@aws-cdk/aws-appsync';
 import { Construct } from '@aws-cdk/core';
 
 const pascalCase = (str: string) => str.length > 1 ? str.charAt(0).toUpperCase() + str.slice(1) : str.toUpperCase();
 
 export type NameFunction = (defaultName: string) => string;
-export type ResolverProps = Omit<CfnResolverProps, "apiId" | "typeName" | "fieldName" | "dataSourceName"> & { api: GraphQLApi; dataSource?: CfnDataSource; };
+export type Props = Omit<ResolverProps, "typeName" | "fieldName">;
 
 const createResolver = (typeName: string, fieldName: string) => (
   scope: Construct,
-  nameOrProps: string | NameFunction | ResolverProps,
-  props?: ResolverProps
+  nameOrProps: string | NameFunction | Props,
+  props?: Props
 ) => {
   let _name = "AppSyncResolver" + typeName + pascalCase(fieldName);
-  let _props: ResolverProps;
+  let _props: Props;
 
   if (typeof nameOrProps === "string") {
     _name = nameOrProps;
@@ -24,15 +24,13 @@ const createResolver = (typeName: string, fieldName: string) => (
     _props = nameOrProps;
   }
   const { api, dataSource, ...restProps } = _props;
-  const resolver = new CfnResolver(scope, _name, {
-    apiId: api.apiId,
+  const resolver = new Resolver(scope, _name, {
+    api,
+    dataSource,
     typeName,
     fieldName,
-    dataSourceName: dataSource?.name,
     ...restProps,
   });
-  resolver.addDependsOn(api.schema);
-  dataSource && resolver.addDependsOn(dataSource);
   return resolver;
 };
 

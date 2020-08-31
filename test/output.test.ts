@@ -6,17 +6,18 @@ test("CloudFormation Test", () => {
   // prepare
   const stack = new TestStack(new App(), "TestStack");
 
+  const resources = SynthUtils.toCloudFormation(stack)["Resources"];
+  const test1Key = Object.keys(resources).find((key) =>
+    key.startsWith("AppSyncResolverQueryGetUser")
+  )!;
+  const test2Key = Object.keys(resources).find((key) =>
+    key.startsWith("TestAppSyncResolverQueryListUsers")
+  )!;
+  console.log({ test1Key, test2Key });
+
   // test 1
-  expect(
-    SynthUtils.toCloudFormation(stack)["Resources"][
-      "AppSyncResolverQueryGetUser"
-    ]
-  ).toMatchSnapshot();
+  expect(resources[test1Key]).toMatchSnapshot();
 
   // test 2
-  expect(
-    SynthUtils.toCloudFormation(stack)["Resources"][
-      "TestAppSyncResolverQueryListUsers"
-    ]
-  ).toMatchSnapshot();
+  expect(resources[test2Key]).toMatchSnapshot();
 });

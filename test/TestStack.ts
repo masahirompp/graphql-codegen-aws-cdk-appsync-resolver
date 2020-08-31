@@ -1,13 +1,10 @@
-import {
-  CfnDataSource,
-  GraphQLApi,
-  SchemaDefinition,
-} from "@aws-cdk/aws-appsync";
+import { GraphQLApi, Schema } from "@aws-cdk/aws-appsync";
 import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
 import {
   createQueryGetUserResolver,
   createQueryListUsersResolver,
 } from "./output";
+import { Function, AssetCode, Runtime } from "@aws-cdk/aws-lambda";
 
 export class TestStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -15,30 +12,25 @@ export class TestStack extends Stack {
 
     const api = new GraphQLApi(this, "ItemsApi", {
       name: "items-api",
-      schemaDefinition: SchemaDefinition.FILE,
-      schemaDefinitionFile: "./test/schema.graphql",
+      schema: Schema.fromAsset("./test/schema.graphql"),
     });
 
-    const dataSourceQueryGetUser = new CfnDataSource(
-      this,
+    const dataSourceQueryGetUser = api.addLambdaDataSource(
       "DataSourceQueryGetUser",
-      {
-        apiId: api.apiId,
-        name: "DataSourceQueryGetUser",
-        type: "AWS_LAMBDA",
-        lambdaConfig: { lambdaFunctionArn: "dummy" },
-      }
+      new Function(this, "GetUserFunction", {
+        code: AssetCode.fromInline("export const handler = () => null"),
+        handler: "index.handler",
+        runtime: Runtime.NODEJS_12_X,
+      })
     );
 
-    const dataSourceQueryListUsers = new CfnDataSource(
-      this,
+    const dataSourceQueryListUsers = api.addLambdaDataSource(
       "DataSourceQueryListUsers",
-      {
-        apiId: api.apiId,
-        name: "DataSourceQueryListUsers",
-        type: "AWS_LAMBDA",
-        lambdaConfig: { lambdaFunctionArn: "dummy" },
-      }
+      new Function(this, "ListUserFunction", {
+        code: AssetCode.fromInline("export const handler = () => null"),
+        handler: "index.handler",
+        runtime: Runtime.NODEJS_12_X,
+      })
     );
 
     // test 1
